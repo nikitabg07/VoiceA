@@ -10,11 +10,12 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { VoiceAssistant } from "@/components/Chatbot";
 import { Mic } from "lucide-react";
+import { API_BASE_URL } from "@/lib/config"; // ✅ Imported API URL
 
 export default function SignUpPage() {
   const router = useRouter();
   const [userType, setUserType] = useState("student");
-  const [isAssistantOpen, setIsAssistantOpen] = useState(false); // Fix: Add missing state
+  const [isAssistantOpen, setIsAssistantOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -37,7 +38,6 @@ export default function SignUpPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validation checks
     if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
       setError("All fields are required.");
       return;
@@ -47,7 +47,6 @@ export default function SignUpPage() {
       return;
     }
 
-    // Prepare request payload
     const newUser = {
       name: formData.name,
       email: formData.email,
@@ -58,7 +57,7 @@ export default function SignUpPage() {
     };
 
     try {
-      const response = await fetch("https://voicea-back-ldg3.onrender.com/api/auth/signup", {
+      const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newUser),
@@ -171,7 +170,6 @@ export default function SignUpPage() {
         </div>
       </motion.div>
 
-      {/* Voice Assistant Button */}
       {isAssistantOpen && <VoiceAssistant onClose={() => setIsAssistantOpen(false)} />}
       <button
         onClick={() => setIsAssistantOpen(true)}
