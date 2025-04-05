@@ -20,7 +20,7 @@ const TeacherUploadQuiz = () => {
     };
 
     const uploadQuiz = async () => {
-        const response = await fetch("/api/upload-quiz", {
+        const response = await fetch("https://voicea-back-ldg3.onrender.com/api/quiz/upload-quiz", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ title, questions }),
@@ -30,8 +30,8 @@ const TeacherUploadQuiz = () => {
     };
 
     const publishQuizForStudents = async () => {
-        alert("Publishing quiz... Please wait."); // Alert before publishing
-        const response = await fetch("/api/publish-quiz", {
+        alert("Publishing quiz... Please wait.");
+        const response = await fetch("https://voicea-back-ldg3.onrender.com/api/quiz/publish-quiz", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ title }),
