@@ -38,6 +38,11 @@ app.use("/uploads/videos", express.static(path.join(__dirname, "uploads/videos")
   }
 }));
 
+// Root route for Render test
+app.get("/", (req, res) => {
+  res.send("✅ VoiceA Backend is Live!");
+});
+
 // Video streaming route
 app.get("/api/videos/:filename", (req, res) => {
   const filePath = path.join(__dirname, "uploads/videos", req.params.filename);
