@@ -42,7 +42,6 @@ export default function SignUpPage() {
     setError("All fields are required.");
     return;
   }
-
   if (formData.password !== formData.confirmPassword) {
     setError("Passwords do not match.");
     return;
@@ -59,14 +58,13 @@ export default function SignUpPage() {
   };
 
   try {
-    const response = await fetch("http://localhost:5000/api/auth/signup", {
+    const response = await fetch("https://voicea-back-ldg3.onrender.com/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newUser),
     });
 
     const data = await response.json();
-
     if (response.ok) {
       setSuccessMessage("✅ Account created successfully! Redirecting to login...");
       setError("");
