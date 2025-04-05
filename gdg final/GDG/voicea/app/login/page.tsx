@@ -12,14 +12,14 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isAssistantOpen, setIsAssistantOpen] = useState(false); // ✅ Added missing state
+  const [isAssistantOpen, setIsAssistantOpen] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
+      const response = await fetch("https://voicea-back-ldg3.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -28,18 +28,17 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("token", data.token); // ✅ Store JWT token
-        localStorage.setItem("loggedInUser", JSON.stringify(data.user)); // ✅ Store user info
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("loggedInUser", JSON.stringify(data.user));
 
-        console.log("User stored in localStorage:", data.user); // ✅ Debugging
+        console.log("User stored in localStorage:", data.user);
 
-        // Redirect based on user type
         if (data.user.userType === "student") {
           router.push("/educationalplatform/student");
         } else if (data.user.userType === "teacher") {
           router.push("/educationalplatform/teacher");
         } else {
-          router.push("/voicea"); // Default redirect
+          router.push("/voicea");
         }
       } else {
         setError(data.message || "Invalid credentials. Please try again.");
@@ -82,6 +81,7 @@ export default function LoginPage() {
           </Button>
         </form>
       </div>
+
       {/* Voice Assistant */}
       {isAssistantOpen && <VoiceAssistant onClose={() => setIsAssistantOpen(false)} />}
       <button
