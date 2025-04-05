@@ -35,48 +35,53 @@ export default function SignUpPage() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
-      setError("All fields are required.");
-      return;
-    }
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
+  // Validation checks
+  if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+    setError("All fields are required.");
+    return;
+  }
 
-    const newUser = {
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      password: formData.password,
-      userType,
-      expertise: userType === "teacher" ? formData.expertise : undefined,
-    };
+  if (formData.password !== formData.confirmPassword) {
+    setError("Passwords do not match.");
+    return;
+  }
 
-    try {
-      const response = await fetch("https://voicea-back-ldg3.onrender.com/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newUser),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        setSuccessMessage("✅ Account created successfully! Redirecting to login...");
-        setError("");
-
-        setTimeout(() => {
-          router.push("/login");
-        }, 3000);
-      } else {
-        setError(data.message || "Signup failed.");
-      }
-    } catch (error) {
-      setError("Something went wrong. Please try again.");
-    }
+  // Prepare request payload
+  const newUser = {
+    name: formData.name,
+    email: formData.email,
+    phone: formData.phone,
+    password: formData.password,
+    userType,
+    expertise: userType === "teacher" ? formData.expertise : undefined,
   };
+
+  try {
+    const response = await fetch("https://voicea-back-ldg3.onrender.com/api/auth/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newUser),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      setSuccessMessage("✅ Account created successfully! Redirecting to login...");
+      setError("");
+
+      setTimeout(() => {
+        router.push("/login");
+      }, 3000);
+    } else {
+      setError(data.message || "Signup failed.");
+    }
+  } catch (error) {
+    setError("Something went wrong. Please try again.");
+  }
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-indigo-50 py-12">
