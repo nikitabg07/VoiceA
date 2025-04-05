@@ -10,7 +10,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { VoiceAssistant } from "@/components/Chatbot";
 import { Mic } from "lucide-react";
-import { API_BASE_URL } from "@/lib/config"; // ✅ Imported API URL
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -57,7 +56,7 @@ export default function SignUpPage() {
     };
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
+      const response = await fetch("https://voicea-back-ldg3.onrender.com/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newUser),
@@ -112,27 +111,27 @@ export default function SignUpPage() {
 
           <div className="space-y-2">
             <Label htmlFor="name">Full Name</Label>
-            <Input id="name" type="text" value={formData.name} onChange={handleChange} required className="w-full" />
+            <Input id="name" type="text" value={formData.name} onChange={handleChange} required />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" value={formData.email} onChange={handleChange} required className="w-full" />
+            <Input id="email" type="email" value={formData.email} onChange={handleChange} required />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="phone">Phone Number</Label>
-            <Input id="phone" type="tel" value={formData.phone} onChange={handleChange} required className="w-full" placeholder="+91 0000000000" />
+            <Input id="phone" type="tel" value={formData.phone} onChange={handleChange} required placeholder="+91 0000000000" />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" value={formData.password} onChange={handleChange} required className="w-full" />
+            <Input id="password" type="password" value={formData.password} onChange={handleChange} required />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="confirmPassword">Confirm Password</Label>
-            <Input id="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange} required className="w-full" />
+            <Input id="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange} required />
           </div>
 
           {userType === "teacher" && (
